@@ -1,0 +1,28 @@
+---
+
+- name: install Python 2
+  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+- name: install needed packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ needed_packages }}"
+
+- name: install extra needed packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ needed_packages_extra }}"
+
+- name: install needed Python modules
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - "{{ needed_python_modules }}"
+
+- name: set timezone
+  timezone:
+    name: "{{ system_time_zone }}"

@@ -1,0 +1,10 @@
+---
+
+needed_packages:
+  - python-pip
+  - qemu-guest-agent
+needed_packages_extra: []
+#  - apache2-utils
+needed_python_modules:
+  - docker-py
+system_time_zone: Europe/Warsaw
