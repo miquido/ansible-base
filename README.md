@@ -24,6 +24,11 @@ needed_python_modules:
   - docker-py
 ```
 
+Additional Python modules (it doesn't overwrite the "needed_python_modules" variable):
+```
+needed_python_modules_extra: []
+```
+
 Setting the correct timezone:
 ```
 system_time_zone: Europe/Warsaw
