@@ -15,7 +15,7 @@ needed_packages:
 
 Additional system packages (it doesn't overwrite the "needed_packages" variable):
 ```
-needed_packages: []
+needed_packages_extra: []
 ```
 
 Installing needed Python modules:
