@@ -19,9 +19,7 @@
 
 - name: install needed Python modules
   pip:
-    name: "{{ item }}"
-  with_items:
-    - "{{ needed_python_modules }}"
+    name: "{{ needed_python_modules }}"
 
 - name: install extra needed Python modules
   pip:
