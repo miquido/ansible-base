@@ -23,9 +23,7 @@
 
 - name: install extra needed Python modules
   pip:
-    name: "{{ item }}"
-  with_items:
-    - "{{ needed_python_modules_extra }}"
+    name: "{{ needed_python_modules_extra }}"
 
 - name: set timezone
   timezone:
