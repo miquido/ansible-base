@@ -1,7 +1,9 @@
 ---
 
 - name: install Python 2
-  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  command: apt -y update && apt install -y python-minimal
+  args:
+    creates: /usr/bin/python
 
 - name: install needed packages
   package:
