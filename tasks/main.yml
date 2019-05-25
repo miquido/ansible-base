@@ -1,7 +1,7 @@
 ---
 
 - name: install Python 2
-  command: apt-get -y update && apt-get install -y python-minimal
+  command: apt -y update && apt install -y python-minimal
   args:
     creates: /usr/bin/python
 
