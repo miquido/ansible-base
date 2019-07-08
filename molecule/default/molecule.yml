@@ -8,7 +8,7 @@ lint:
 platforms:
   - name: instance
     image: ubuntu:16.04
-    privileged: True
+    privileged: true
     volumes:
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro
 provisioner:
