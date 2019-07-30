@@ -3,7 +3,5 @@
 - name: Converge
   hosts: all
   become: true
-  vars:
-    system_time_zone: Asia/Tokyo
   roles:
     - role: ansible-base

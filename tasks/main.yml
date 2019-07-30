@@ -28,5 +28,5 @@
     name: "{{ needed_python_modules_extra }}"
 
 - name: set timezone
-  timezone:
-    name: "{{ system_time_zone }}"
+  command: timedatectl set-timezone "{{ system_time_zone }}"
+  changed_when: false
