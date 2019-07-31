@@ -1,14 +1,24 @@
 import os
-
+import pytest
+import re
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_hosts_file(host):
-    f = host.file('/etc/hosts')
+@pytest.mark.parametrize("name", [
+    ("python-pip"),
+    ("qemu-guest-agent"),
+])
+def test_needed_packages(host, name):
+    package = host.package(name)
+    assert package.is_installed
 
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+
+@pytest.mark.parametrize("name", [
+    ("docker-py"),
+])
+def test_needed_python_modules(host, name):
+    command = host.check_output("pip freeze")
+    assert re.match("^" + name + "==*", command) is None
