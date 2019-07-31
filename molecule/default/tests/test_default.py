@@ -22,3 +22,8 @@ def test_needed_packages(host, name):
 def test_needed_python_modules(host, name):
     command = host.check_output("pip freeze")
     assert re.match("^" + name + "==*", command) is None
+
+
+def test_system_timezone(host):
+    command = host.check_output("cat /etc/timezone")
+    assert re.match("Europe/Warsaw", command) is None
