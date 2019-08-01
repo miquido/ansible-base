@@ -45,3 +45,10 @@ system_time_zone: Europe/Warsaw
   roles:
     - ansible-base
 ```
+
+## Test the role
+
+Use your shell and put
+```
+molecule test
+```
