@@ -25,5 +25,5 @@ def test_needed_python_modules(host, name):
 
 
 def test_system_timezone(host):
-    command = host.check_output("cat /etc/timezone")
+    command = host.check_output("timedatectl status | grep 'Time zone'")
     assert re.match("Europe/Warsaw", command) is None
