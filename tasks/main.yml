@@ -1,35 +1,35 @@
 ---
 
-#- name: install Python 2
-#  command: apt -y update && apt install -y python-minimal
-#  args:
-#    creates: /usr/bin/python
-#
-#- name: install needed packages
-#  package:
-#    name: "{{ item }}"
-#    state: present
-#  with_items:
-#    - "{{ needed_packages }}"
-#
-#- name: install extra needed packages
-#  package:
-#    name: "{{ item }}"
-#    state: present
-#  with_items:
-#    - "{{ needed_packages_extra }}"
-#
-#- name: install needed Python modules
-#  pip:
-#    name: "{{ needed_python_modules }}"
-#
-#- name: install extra needed Python modules
-#  pip:
-#    name: "{{ needed_python_modules_extra }}"
-#
-#- name: set timezone
-#  command: timedatectl set-timezone "{{ system_time_zone }}"
-#  changed_when: false
+- name: install Python 2
+  command: apt -y update && apt install -y python-minimal
+  args:
+    creates: /usr/bin/python
+
+- name: install needed packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ needed_packages }}"
+
+- name: install extra needed packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ needed_packages_extra }}"
+
+- name: install needed Python modules
+  pip:
+    name: "{{ needed_python_modules }}"
+
+- name: install extra needed Python modules
+  pip:
+    name: "{{ needed_python_modules_extra }}"
+
+- name: set timezone
+  command: timedatectl set-timezone "{{ system_time_zone }}"
+  changed_when: false
 
 - name: install the node_exporter
   block:
