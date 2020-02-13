@@ -13,6 +13,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ])
 def test_needed_packages(host, name):
     package = host.package(name)
+
     assert package.is_installed
 
 
@@ -21,9 +22,22 @@ def test_needed_packages(host, name):
 ])
 def test_needed_python_modules(host, name):
     command = host.check_output("pip freeze")
+
     assert re.match("^" + name + "==*", command) is None
 
 
 def test_system_timezone(host):
     command = host.check_output("timedatectl status | grep 'Time zone'")
+
     assert re.match("Europe/Warsaw", command) is None
+
+
+@pytest.mark.parametrize('service', [
+  'node_exporter'
+])
+def test_node_exporter_service(host, service):
+  service_name = host.service_name(service)
+
+  assert service_name.is_running
+
+  assert service_name.is_enabled
