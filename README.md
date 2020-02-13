@@ -56,3 +56,8 @@ Use your shell and put
 ```
 molecule test
 ```
+
+You have to also install needed Python module:
+```
+pip install docker-py
+```
