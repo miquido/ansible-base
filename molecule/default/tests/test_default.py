@@ -36,8 +36,8 @@ def test_system_timezone(host):
   'node_exporter'
 ])
 def test_node_exporter_service(host, svc):
-  service = host.service(svc)
+    service = host.service(svc)
 
-  assert service.is_running
+    assert service.is_running
 
-  assert service.is_enabled
+    assert service.is_enabled
