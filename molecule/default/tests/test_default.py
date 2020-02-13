@@ -32,12 +32,12 @@ def test_system_timezone(host):
     assert re.match("Europe/Warsaw", command) is None
 
 
-@pytest.mark.parametrize('service', [
+@pytest.mark.parametrize('svc', [
   'node_exporter'
 ])
-def test_node_exporter_service(host, service):
-  service_name = host.service_name(service)
+def test_node_exporter_service(host, svc):
+  service_name = host.service(svc)
 
-  assert service_name.is_running
+  assert service.is_running
 
-  assert service_name.is_enabled
+  assert service.is_enabled
