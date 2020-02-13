@@ -1,0 +1,26 @@
+[Unit]
+Description=node_exporter
+
+[Service]
+User=node_exporter
+Group=node_exporter
+ExecStart=/usr/local/bin/node_exporter \
+{% for collector in node_exporter_enabled_collectors -%}
+{%   if not collector is mapping %}
+    --collector.{{ collector }} \
+{%   else -%}
+{%     set name, options = (collector.items()|list)[0] -%}
+    --collector.{{ name }} \
+{%     for key,value in options|dictsort %}
+    --collector.{{ name }}.{{ key }}={{ value }} \
+{%     endfor -%}
+{%   endif -%}
+{% endfor -%}
+{% for collector in node_exporter_disabled_collectors %}
+    --no-collector.{{ collector }} \
+{% endfor %}
+    --web.listen-address=0.0.0.0:9100
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -3,10 +3,25 @@
 needed_packages:
   - python-pip
   - qemu-guest-agent
+
 needed_packages_extra: []
 #  - apache2-utils
 needed_python_modules:
   - docker-py
+
 needed_python_modules_extra: []
 #  - certbot-dns-route53
+node_exporter: true
+node_exporter_version: 0.18.1
+
+node_exporter_enabled_collectors:
+  - systemd
+  - textfile:
+      directory: "/var/lib/node_exporter"
+#  - filesystem:
+#      ignored-mount-points: "^/(sys|proc|dev)($|/)"
+#      ignored-fs-types: "^(sys|proc|auto)fs$"
+
+node_exporter_disabled_collectors: []
+
 system_time_zone: Europe/Warsaw
