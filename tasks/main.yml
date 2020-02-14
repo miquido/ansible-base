@@ -1,12 +1,11 @@
 ---
 
-- name: update the system
-  command: apt-get update
-
 - name: install Python 2
-  command: apt-get install -y python-minimal pip3
-  args:
-    creates: /usr/bin/python
+  apt: 
+    name: "{{ item }}"
+    update_cache: true
+  with_items:
+    - python-minimal
 
 - name: install needed packages
   package:
