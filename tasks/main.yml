@@ -1,7 +1,7 @@
 ---
 
 - name: install Python 2
-  apt: 
+  apt:
     name: "{{ item }}"
     update_cache: true
   with_items:
