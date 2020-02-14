@@ -1,7 +1,10 @@
 ---
 
+- name: update the system
+  command: apt-get update
+
 - name: install Python 2
-  command: apt -y update && apt install -y python-minimal
+  command: apt-get install -y python-minimal pip3
   args:
     creates: /usr/bin/python
 
