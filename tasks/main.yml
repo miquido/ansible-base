@@ -2,10 +2,8 @@
 
 - name: install Python 2
   apt:
-    name: "{{ item }}"
+    name: ['python-minimal']
     update_cache: true
-  with_items:
-    - python-minimal
 
 - name: install needed packages
   package:
