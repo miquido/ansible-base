@@ -28,8 +28,8 @@
     name: "{{ needed_python_modules_extra }}"
 
 - name: set timezone
-  command: timedatectl set-timezone "{{ system_time_zone }}"
-  changed_when: false
+  timezone:
+    name: "{{ system_time_zone }}"
 
 - name: install the node_exporter
   block:

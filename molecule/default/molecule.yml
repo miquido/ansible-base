@@ -9,8 +9,11 @@ platforms:
   - name: ubuntu1604
     image: ubuntu:16.04
     privileged: true
+    volume_mounts:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     volumes:
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
   - name: ubuntu1804
     image: ubuntu:18.04
     privileged: true
