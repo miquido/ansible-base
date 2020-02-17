@@ -85,4 +85,6 @@
       systemd:
         name: node_exporter
         enabled: true
+        daemon_reload: true
+        state: started
   when: node_exporter|bool
