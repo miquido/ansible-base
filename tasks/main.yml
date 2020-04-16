@@ -31,6 +31,9 @@
   timezone:
     name: "{{ system_time_zone }}"
 
+- name: reconfigure tzdata
+  shell: dpkg-reconfigure -f noninteractive tzdata
+
 - name: install the node_exporter
   block:
     - name: create the node_exporter group
@@ -38,6 +41,7 @@
         name: node_exporter
         state: present
         system: true
+
     - name: create the node_exporter user
       user:
         name: node_exporter
@@ -47,16 +51,19 @@
         system: true
         create_home: false
         home: /
+
     - name: download the node_exporter archive
       get_url:
         url: "{{ node_exporter_download_url }}"
         dest: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+
     - name: unpack the node_exporter archive
       unarchive:
         src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
         dest: "/tmp"
         remote_src: true
         creates: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+    
     - name: propagate the node_exporter binary
       copy:
         src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
@@ -65,6 +72,7 @@
         mode: 0755
         owner: root
         group: root
+    
     - name: create the node_exporter collector directory
       file:
         path: /var/lib/node_exporter
@@ -73,6 +81,7 @@
         group: node_exporter
         recurse: true
         mode: 0775
+    
     - name: copy the node_exporter service file
       template:
         src: node_exporter.service.j2
@@ -80,7 +89,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: node_exporter restart
+    
     - name: enable the node_exporter service
       systemd:
         name: node_exporter

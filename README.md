@@ -6,7 +6,7 @@
 
 ## Synopsis
 
-This role privides basic system configuration.
+This role provides basic system configuration.
 
 ## Variables
 
@@ -48,16 +48,4 @@ system_time_zone: Europe/Warsaw
   gather_facts: False
   roles:
     - ansible-base
-```
-
-## Test the role
-
-Use your shell and put
-```
-molecule test
-```
-
-You have to also install needed Python module:
-```
-pip install docker-py
 ```
