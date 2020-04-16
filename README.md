@@ -1,12 +1,11 @@
 # ansible-base
 
-[![Build Status](https://www.travis-ci.org/miquido/ansible-base.svg?branch=master)](https://www.travis-ci.org/miquido/ansible-base) 
 [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Twitter URL](https://img.shields.io/twitter/follow/miquido.svg?style=social&label=Follow%20%40Miquido)](https://twitter.com/miquido)
 
 ## Synopsis
 
-This role privides basic system configuration.
+This role provides basic system configuration.
 
 ## Variables
 
@@ -48,11 +47,4 @@ system_time_zone: Europe/Warsaw
   gather_facts: False
   roles:
     - ansible-base
-```
-
-## Test the role
-
-Use your shell and put
-```
-molecule test
 ```

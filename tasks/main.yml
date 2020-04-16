@@ -1,9 +1,9 @@
 ---
 
 - name: install Python 2
-  command: apt -y update && apt install -y python-minimal
-  args:
-    creates: /usr/bin/python
+  apt:
+    name: ['python-minimal']
+    update_cache: true
 
 - name: install needed packages
   package:
@@ -28,5 +28,72 @@
     name: "{{ needed_python_modules_extra }}"
 
 - name: set timezone
-  command: timedatectl set-timezone "{{ system_time_zone }}"
-  changed_when: false
+  timezone:
+    name: "{{ system_time_zone }}"
+
+- name: reconfigure tzdata
+  shell: dpkg-reconfigure -f noninteractive tzdata
+
+- name: install the node_exporter
+  block:
+    - name: create the node_exporter group
+      group:
+        name: node_exporter
+        state: present
+        system: true
+
+    - name: create the node_exporter user
+      user:
+        name: node_exporter
+        groups: node_exporter
+        append: true
+        shell: /usr/sbin/nologin
+        system: true
+        create_home: false
+        home: /
+
+    - name: download the node_exporter archive
+      get_url:
+        url: "{{ node_exporter_download_url }}"
+        dest: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+
+    - name: unpack the node_exporter archive
+      unarchive:
+        src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+        dest: "/tmp"
+        remote_src: true
+        creates: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+    
+    - name: propagate the node_exporter binary
+      copy:
+        src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+        dest: "/usr/local/bin/node_exporter"
+        remote_src: true
+        mode: 0755
+        owner: root
+        group: root
+    
+    - name: create the node_exporter collector directory
+      file:
+        path: /var/lib/node_exporter
+        state: directory
+        owner: node_exporter
+        group: node_exporter
+        recurse: true
+        mode: 0775
+    
+    - name: copy the node_exporter service file
+      template:
+        src: node_exporter.service.j2
+        dest: /etc/systemd/system/node_exporter.service
+        owner: root
+        group: root
+        mode: 0644
+    
+    - name: enable the node_exporter service
+      systemd:
+        name: node_exporter
+        enabled: true
+        daemon_reload: true
+        state: started
+  when: node_exporter|bool

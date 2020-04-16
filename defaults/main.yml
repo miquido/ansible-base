@@ -2,11 +2,24 @@
 
 needed_packages:
   - python-pip
+  - tzdata
   - qemu-guest-agent
+
 needed_packages_extra: []
-#  - apache2-utils
+
 needed_python_modules:
   - docker-py
+
 needed_python_modules_extra: []
-#  - certbot-dns-route53
-system_time_zone: Europe/Warsaw
+node_exporter: true
+node_exporter_version: 0.18.1
+node_exporter_download_url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+
+node_exporter_enabled_collectors:
+  - systemd
+  - textfile:
+      directory: "/var/lib/node_exporter"
+
+node_exporter_disabled_collectors: []
+
+system_time_zone: "Europe/Warsaw"
